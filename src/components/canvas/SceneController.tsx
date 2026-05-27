@@ -14,7 +14,9 @@ export function SceneController() {
   const prevSection = useRef(0)
   useFrame(() => {
     if (activeSection !== prevSection.current) {
-      triggerGlitchEffect()
+      if (activeSection > 0) {
+        triggerGlitchEffect()
+      }
       prevSection.current = activeSection
     }
   })

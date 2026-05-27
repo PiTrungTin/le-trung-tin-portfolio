@@ -8,7 +8,6 @@ import { Effects } from './Effects'
 import { SceneSetup } from './SceneSetup'
 import { SceneController } from './SceneController'
 import { GridFloor } from './GridFloor'
-import { RobotGuide } from './RobotGuide'
 import { HeroScene3D } from '../sections/hero/HeroScene3D'
 import { AboutScene3D } from '../sections/about/AboutScene3D'
 import { SkillsScene3D } from '../sections/skills/SkillsScene3D'
@@ -26,7 +25,7 @@ function ParticlesImpl({ count = 2000 }: { count?: number }) {
   const tier = useStore((s) => s.deviceTier)
   const scroll = useScroll()
 
-  const actualCount = tier === 'high' ? count : tier === 'medium' ? 600 : 180
+  const actualCount = tier === 'high' ? count : tier === 'medium' ? 360 : 120
 
   const [positions, colors, sizes] = useMemo(() => {
     const pos = new Float32Array(actualCount * 3)
@@ -83,7 +82,7 @@ function ParticlesImpl({ count = 2000 }: { count?: number }) {
         vertexColors
         sizeAttenuation
         transparent
-        opacity={0.28}
+        opacity={0.18}
         blending={THREE.NormalBlending}
         depthWrite={false}
       />
@@ -91,7 +90,7 @@ function ParticlesImpl({ count = 2000 }: { count?: number }) {
   )
 }
 
-function Particles({ count = 1200 }: { count?: number }) {
+function Particles({ count = 420 }: { count?: number }) {
   return (
     <Suspense fallback={null}>
       <ParticlesImpl count={count} />
@@ -105,7 +104,6 @@ function SceneContent() {
       <SceneController />
       <GridFloor />
       <Particles />
-      <RobotGuide />
 
       <Suspense fallback={null}>
         <HeroScene3D />
