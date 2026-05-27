@@ -7,22 +7,22 @@ interface NeonButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 
 const variantStyles = {
   cyan: {
-    border: '#00ffff',
-    glow: '#00ffff',
-    bg: 'rgba(0, 255, 255, 0.05)',
-    text: '#00ffff',
+    border: '#169ee6',
+    glow: '#169ee6',
+    bg: 'linear-gradient(135deg, rgba(22, 158, 230, 0.18), rgba(255, 255, 255, 0.9))',
+    text: '#0f4f7f',
   },
   magenta: {
-    border: '#ff00ff',
-    glow: '#ff00ff',
-    bg: 'rgba(255, 0, 255, 0.05)',
-    text: '#ff00ff',
+    border: '#f97352',
+    glow: '#f97352',
+    bg: 'linear-gradient(135deg, rgba(249, 115, 82, 0.18), rgba(255, 255, 255, 0.92))',
+    text: '#8b3e28',
   },
   yellow: {
-    border: '#ffff00',
-    glow: '#ffff00',
-    bg: 'rgba(255, 255, 0, 0.05)',
-    text: '#ffff00',
+    border: '#f3b63f',
+    glow: '#f3b63f',
+    bg: 'linear-gradient(135deg, rgba(243, 182, 63, 0.18), rgba(255, 255, 255, 0.92))',
+    text: '#7d5a10',
   },
 }
 
@@ -37,18 +37,13 @@ export function NeonButton({
 
   return (
     <button
-      className={`font-mono text-sm tracking-widest uppercase px-8 py-3 cursor-pointer
-        transition-all duration-300
-        hover:scale-105 hover:brightness-125
-        active:scale-95 ${className}`}
+      className={`font-mono text-sm tracking-[0.16em] uppercase px-7 py-3.5 cursor-pointer rounded-full
+        transition-all duration-300 hover:-translate-y-0.5 active:translate-y-0 disabled:opacity-60 disabled:cursor-not-allowed ${className}`}
       style={{
         color: v.text,
         background: v.bg,
         border: `1px solid ${v.border}`,
-        boxShadow: `0 0 10px ${v.glow}, 0 0 20px ${v.glow}, inset 0 0 10px ${v.glow}22`,
-        clipPath: 'polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%)',
-        paddingLeft: '2.5rem',
-        paddingRight: '2.5rem',
+        boxShadow: `0 16px 32px ${v.glow}22, inset 0 1px 0 rgba(255,255,255,0.75)`,
         ...style,
       }}
       {...props}

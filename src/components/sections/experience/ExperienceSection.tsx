@@ -4,124 +4,63 @@ import { HolographicCard } from '../../ui/HolographicCard'
 
 const experiences = [
   {
-    role: 'Senior Frontend Developer',
-    company: 'TechCorp Inc.',
-    year: '2024 — Present',
-    desc: 'Leading 3D visualization team, architecting WebGL-based product configurators. Reduced bundle size by 40%, improved Core Web Vitals by 35%. Mentoring junior developers in React and Three.js.',
-    tech: ['React', 'Three.js', 'TypeScript', 'WebGL'],
+    role: 'Middle Software Engineer',
+    company: 'Hanatour Japan System',
+    year: 'Oct 2024 - Present',
+    desc: 'Led Vue 3 frontend initialization, built dynamic tour-builder logic, optimized high-load APIs with Redis caching, and improved hotel search response time with ElasticSearch.',
     variant: 'cyan' as const,
   },
   {
-    role: 'Full-Stack Developer',
-    company: 'StartupXYZ',
-    year: '2022 — 2024',
-    desc: 'Built core product from scratch - a real-time collaboration platform serving 50K+ users. Designed GraphQL API, implemented WebSocket layer for live sync, and managed AWS infrastructure.',
-    tech: ['Next.js', 'GraphQL', 'PostgreSQL', 'AWS'],
+    role: 'Full-Stack Software Engineer',
+    company: 'FPT Software',
+    year: 'Sep 2022 - Sep 2024',
+    desc: 'Worked across Java/Spring Boot, NestJS microservices, Kafka workflows, Azure DevOps pipelines, and React/Vue booking interfaces for travel systems.',
     variant: 'magenta' as const,
   },
   {
-    role: 'Junior Developer',
-    company: 'WebAgency Pro',
-    year: '2021 — 2022',
-    desc: 'Delivered 15+ client projects from concept to deployment. Specialized in interactive landing pages with Framer Motion and CSS animations. Introduced component library that cut dev time by 30%.',
-    tech: ['React', 'Framer Motion', 'SCSS', 'Figma'],
+    role: 'Technical Coordination and Reliability',
+    company: 'Sub-leader responsibilities and production support',
+    year: 'Recent impact',
+    desc: 'Coordinated tasks, unblocked technical issues, improved code quality through peer review, and introduced idempotency plus DLQ patterns to prevent duplicate processing and data loss.',
     variant: 'yellow' as const,
   },
 ]
 
 export function ExperienceSection() {
   return (
-    <section id="experience" className="min-h-screen flex items-center justify-center relative py-20">
-      <div className="max-w-3xl mx-auto px-6 w-full">
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true, margin: '-100px' }}
-          transition={{ duration: 0.5 }}
-          className="text-center mb-16"
-        >
-          <SectionHeading
-            title="Experience"
-            subtitle="// cat /var/log/career.log"
-            variant="yellow"
-            className="text-center flex flex-col items-center"
-          />
-        </motion.div>
+    <section id="experience" className="relative flex min-h-screen items-center py-20 lg:py-24">
+      <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden>
+        <div className="absolute left-[9%] top-20 h-[60%] w-px bg-[linear-gradient(180deg,rgba(22,158,230,0),rgba(22,158,230,0.35),rgba(249,115,82,0.25),rgba(243,182,63,0))]" />
+        <div className="absolute right-[10%] top-28 space-y-8 opacity-40">
+          <div className="h-16 w-16 rounded-full border border-cyan-200/40" />
+          <div className="ml-10 h-10 w-10 rounded-full border border-orange-200/40" />
+          <div className="ml-4 h-12 w-12 rounded-full border border-amber-200/40" />
+        </div>
+      </div>
 
-        {/* Single-axis timeline: all dots on the left, cards on the right */}
-        <div className="relative pl-8 md:pl-0">
-          {/* Vertical timeline line on the left */}
-          <div
-            className="absolute left-0 md:left-[11px] top-2 bottom-2 w-px"
-            style={{
-              background: 'linear-gradient(180deg, #00ffff44, #ff00ff44, #ffff0044)',
-            }}
-          />
+      <div className="relative z-10 w-full">
+        <SectionHeading title="Path" subtitle="experience and delivery style" variant="yellow" />
 
-          <div className="space-y-10">
-            {experiences.map((exp, i) => {
-              const colorVal = exp.variant === 'cyan' ? '#00ffff' : exp.variant === 'magenta' ? '#ff00ff' : '#ffff00'
-              return (
-                <motion.div
-                  key={i}
-                  initial={{ opacity: 0, x: -20 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true, margin: '-60px' }}
-                  transition={{ duration: 0.5, delay: i * 0.12 }}
-                  className="relative pl-8 md:pl-10"
-                >
-                  {/* Timeline dot — all on the same left axis */}
-                  <div
-                    className="absolute left-0 md:left-0 top-4 w-3 h-3 rounded-full"
-                    style={{
-                      backgroundColor: colorVal,
-                      boxShadow: `0 0 10px ${colorVal}, 0 0 20px ${colorVal}66`,
-                      transform: 'translateX(-5.5px)',
-                    }}
-                  />
-
-                  {/* Connector line from dot to card */}
-                  <div
-                    className="absolute left-[5.5px] md:left-[5.5px] top-[22px] w-6 md:w-6 h-px hidden md:block"
-                    style={{
-                      background: `linear-gradient(90deg, ${colorVal}88, transparent)`,
-                    }}
-                  />
-
-                  <HolographicCard variant={exp.variant} delay={i * 0.12}>
-                    <span
-                      className="font-mono text-[10px] tracking-widest uppercase opacity-60"
-                      style={{ color: colorVal }}
-                    >
-                      {exp.year}
-                    </span>
-                    <h3 className="font-display text-lg font-bold text-white mt-1 mb-1">
-                      {exp.role}
-                    </h3>
-                    <p
-                      className="font-mono text-xs opacity-70 mb-3"
-                      style={{ color: colorVal }}
-                    >
-                      {exp.company}
-                    </p>
-                    <p className="font-mono text-xs text-gray-400 leading-relaxed mb-3">
-                      {exp.desc}
-                    </p>
-                    <div className="flex gap-1.5 flex-wrap">
-                      {exp.tech.map((t) => (
-                        <span
-                          key={t}
-                          className="font-mono text-[9px] px-2 py-0.5 bg-cyber-dark/50 rounded border border-cyber-border/30 text-gray-500"
-                        >
-                          {t}
-                        </span>
-                      ))}
-                    </div>
-                  </HolographicCard>
-                </motion.div>
-              )
-            })}
-          </div>
+        <div className="relative mt-10 space-y-6 before:absolute before:left-[18px] before:top-6 before:bottom-6 before:w-px before:bg-[linear-gradient(180deg,rgba(22,158,230,0.4),rgba(249,115,82,0.32),rgba(243,182,63,0.32))] md:before:left-1/2 md:before:-translate-x-1/2">
+          {experiences.map((exp, i) => (
+            <motion.div
+              key={exp.role}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-80px' }}
+              transition={{ duration: 0.5, delay: i * 0.08 }}
+              className={`relative grid gap-5 md:grid-cols-2 md:gap-8 ${i % 2 === 1 ? 'md:[&>*:first-child]:order-2' : ''}`}
+            >
+              <div className="hidden md:block" />
+              <div className="absolute left-[18px] top-8 h-3.5 w-3.5 -translate-x-[5px] rounded-full border border-white bg-white shadow-[0_0_0_6px_rgba(255,255,255,0.6)] md:left-1/2 md:-translate-x-1/2" />
+              <HolographicCard variant={exp.variant} className="ml-10 md:ml-0 bg-white/74">
+                <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-slate-500">{exp.year}</p>
+                <h3 className="mt-4 font-display text-2xl uppercase leading-[1.2] tracking-[0.06em] text-slate-900">{exp.role}</h3>
+                <p className="mt-2 font-mono text-[11px] uppercase leading-5 tracking-[0.14em] text-slate-500">{exp.company}</p>
+                <p className="mt-4 text-sm leading-7 text-slate-600">{exp.desc}</p>
+              </HolographicCard>
+            </motion.div>
+          ))}
         </div>
       </div>
     </section>

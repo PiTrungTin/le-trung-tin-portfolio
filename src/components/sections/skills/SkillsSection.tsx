@@ -2,178 +2,80 @@ import { motion } from 'framer-motion'
 import { SectionHeading } from '../../ui/SectionHeading'
 import { HolographicCard } from '../../ui/HolographicCard'
 
-interface Skill {
-  name: string
-  level: number
-}
-
-interface SkillCategory {
-  title: string
-  icon: string
-  variant: 'cyan' | 'magenta' | 'yellow'
-  skills: Skill[]
-}
-
-const skillCategories: SkillCategory[] = [
+const skillColumns = [
   {
-    title: 'Frontend',
-    icon: '</>',
-    variant: 'cyan',
-    skills: [
-      { name: 'React', level: 95 },
-      { name: 'TypeScript', level: 90 },
-      { name: 'Three.js / R3F', level: 85 },
-      { name: 'TailwindCSS', level: 92 },
-      { name: 'Next.js', level: 80 },
-      { name: 'Framer Motion', level: 88 },
-    ],
+    title: 'Languages',
+    variant: 'cyan' as const,
+    items: ['JavaScript', 'TypeScript', 'Java', 'SQL', 'Python'],
   },
   {
     title: 'Backend',
-    icon: '{}',
-    variant: 'magenta',
-    skills: [
-      { name: 'Node.js', level: 88 },
-      { name: 'Python', level: 82 },
-      { name: 'PostgreSQL', level: 78 },
-      { name: 'GraphQL', level: 75 },
-      { name: 'REST APIs', level: 92 },
-    ],
+    variant: 'magenta' as const,
+    items: ['Spring Boot', 'Node.js', 'NestJS', 'Kafka', 'Redis', 'CQRS'],
   },
   {
-    title: 'Tools & DevOps',
-    icon: '#',
-    variant: 'yellow',
-    skills: [
-      { name: 'Docker', level: 80 },
-      { name: 'Git', level: 95 },
-      { name: 'Linux', level: 82 },
-      { name: 'CI/CD', level: 78 },
-      { name: 'AWS', level: 72 },
-    ],
+    title: 'Frontend & Cloud',
+    variant: 'yellow' as const,
+    items: ['React.js', 'Next.js', 'Vue.js (Vuex)', 'Tailwind CSS', 'Azure DevOps', 'App Service'],
   },
 ]
 
-function SkillBar({ name, level, variant }: { name: string; level: number; variant: 'cyan' | 'magenta' | 'yellow' }) {
-  const glowColor = variant === 'cyan' ? '#00ffff' : variant === 'magenta' ? '#ff00ff' : '#ffff00'
-
-  return (
-    <motion.div
-      initial={{ opacity: 0, x: -10 }}
-      whileInView={{ opacity: 1, x: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.3 }}
-      className="mb-3"
-    >
-      <div className="flex justify-between mb-1">
-        <span className="font-mono text-xs text-gray-300">{name}</span>
-        <span className="font-mono text-xs text-gray-500">{level}%</span>
-      </div>
-      <div className="h-1.5 bg-cyber-dark/80 rounded-full overflow-hidden border border-cyber-border/30">
-        <motion.div
-          initial={{ width: 0 }}
-          whileInView={{ width: `${level}%` }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8, delay: 0.2, ease: 'easeOut' }}
-          className="h-full rounded-full"
-          style={{
-            background: `linear-gradient(90deg, ${glowColor}88, ${glowColor})`,
-            boxShadow: `0 0 8px ${glowColor}66`,
-          }}
-        />
-      </div>
-    </motion.div>
-  )
-}
-
 export function SkillsSection() {
   return (
-    <section id="skills" className="min-h-screen flex items-center justify-center relative py-20">
-      <div className="max-w-6xl mx-auto px-6 w-full">
+    <section id="skills" className="relative flex min-h-screen items-center py-20 lg:py-24">
+      <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden>
+        <div className="absolute left-[5%] top-28 h-28 w-28 rounded-full border border-cyan-200/35" />
+        <div className="absolute right-[10%] top-20 grid grid-cols-4 gap-3 opacity-40">
+          {Array.from({ length: 12 }).map((_, i) => (
+            <span key={i} className="h-2.5 w-2.5 rounded-full bg-cyan-200/70" />
+          ))}
+        </div>
+        <div className="absolute bottom-24 right-[8%] h-48 w-48 rounded-[36px] border border-amber-200/30" />
+      </div>
+
+      <div className="relative z-10 w-full">
         <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
-          viewport={{ once: true, margin: '-100px' }}
+          viewport={{ once: true, margin: '-120px' }}
           transition={{ duration: 0.5 }}
-          className="text-center mb-16"
+          className="max-w-3xl"
         >
-          <SectionHeading
-            title="Skills & Tech"
-            subtitle="// cat /etc/skills.conf"
-            variant="cyan"
-            className="text-center flex flex-col items-center"
-          />
+          <SectionHeading title="Stack" subtitle="toolkit and working strengths" variant="cyan" />
+          <p className="max-w-2xl text-base leading-8 text-slate-600 md:text-lg">
+            These are the technologies I use most often in production work, especially across
+            backend services, booking flows, and operational systems in travel products.
+          </p>
         </motion.div>
 
-        {/* Staggered 3-column layout */}
-        <div className="flex flex-col md:flex-row gap-6 items-start justify-center">
-          {skillCategories.map((category, catIdx) => (
-            <div
-              key={category.title}
-              className={`w-full md:w-[30%] ${
-                catIdx === 0
-                  ? 'md:self-start md:mt-0'
-                  : catIdx === 1
-                    ? 'md:self-center md:mt-16'
-                    : 'md:self-end md:mt-32'
-              }`}
-            >
-              <HolographicCard variant={category.variant} delay={catIdx * 0.15}>
-                <div className="flex items-center gap-2 mb-5">
-                  <span
-                    className={`font-mono text-lg ${
-                      category.variant === 'cyan' ? 'text-cyber-cyan' :
-                      category.variant === 'magenta' ? 'text-cyber-magenta' : 'text-cyber-yellow'
-                    }`}
-                    style={{
-                      textShadow: `0 0 8px ${
-                        category.variant === 'cyan' ? '#00ffff' :
-                        category.variant === 'magenta' ? '#ff00ff' : '#ffff00'
-                      }`,
-                    }}
-                  >
-                    {category.icon}
-                  </span>
-                  <h3 className={`font-display text-sm font-bold tracking-wider ${
-                    category.variant === 'cyan' ? 'text-cyber-cyan' :
-                    category.variant === 'magenta' ? 'text-cyber-magenta' : 'text-cyber-yellow'
-                  }`}>
-                    {category.title}
-                  </h3>
-                </div>
-
-                {category.skills.map((skill) => (
-                  <SkillBar
-                    key={skill.name}
-                    name={skill.name}
-                    level={skill.level}
-                    variant={category.variant}
-                  />
+        <div className="mt-10 grid gap-5 xl:grid-cols-3">
+          {skillColumns.map((column, index) => (
+            <HolographicCard key={column.title} variant={column.variant} delay={0.12 * index} className="bg-white/72">
+              <p className="font-display text-2xl uppercase leading-[1.2] tracking-[0.08em] text-slate-900">{column.title}</p>
+              <div className="mt-6 space-y-3">
+                {column.items.map((item, itemIndex) => (
+                  <div key={item} className="flex items-center gap-3 rounded-2xl border border-white/60 bg-white/65 px-4 py-3">
+                    <span className="shrink-0 font-mono text-[10px] uppercase tracking-[0.14em] text-slate-400 sm:text-[11px]">
+                      0{itemIndex + 1}
+                    </span>
+                    <span className="min-w-0 text-sm leading-6 text-slate-600">{item}</span>
+                  </div>
                 ))}
-              </HolographicCard>
-            </div>
+              </div>
+            </HolographicCard>
           ))}
         </div>
 
-        {/* Additional skill tags */}
-        <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.4, delay: 0.5 }}
-          className="flex flex-wrap gap-2 justify-center mt-16"
-        >
-          {['WebGL', 'Blender', 'Figma', 'Redis', 'MongoDB', 'WebSocket', 'Nginx', 'Terraform'].map((tag) => (
+        <div className="mt-8 flex flex-wrap gap-2.5 md:gap-3">
+          {['PostgreSQL', 'MySQL', 'ElasticSearch', 'Microservices', 'Idempotency', 'Saga Pattern'].map((tag) => (
             <span
               key={tag}
-              className="font-mono text-xs px-3 py-1.5 border border-cyber-cyan/20 rounded-full
-                         bg-cyber-surface/30 text-gray-400 hover:text-cyber-cyan hover:border-cyber-cyan/50
-                         transition-colors duration-300 cursor-default backdrop-blur-sm"
+              className="rounded-full border border-white/70 bg-white/70 px-3.5 py-2 font-mono text-[10px] uppercase leading-5 tracking-[0.12em] text-slate-500 shadow-[0_12px_26px_rgba(23,50,77,0.06)] sm:text-[11px]"
             >
               {tag}
             </span>
           ))}
-        </motion.div>
+        </div>
       </div>
     </section>
   )

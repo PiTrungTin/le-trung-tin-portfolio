@@ -11,25 +11,25 @@ export function SectionHeading({
   variant = 'cyan',
   className = '',
 }: SectionHeadingProps) {
-  const glowColor = variant === 'cyan' ? '#00ffff' : variant === 'magenta' ? '#ff00ff' : '#ffff00'
+  const glowColor = variant === 'cyan' ? '#169ee6' : variant === 'magenta' ? '#f97352' : '#f3b63f'
   const textColor = variant === 'cyan' ? 'text-cyber-cyan' : variant === 'magenta' ? 'text-cyber-magenta' : 'text-cyber-yellow'
 
   return (
     <div className={`mb-12 ${className}`}>
       <h2
-        className={`font-display text-4xl md:text-5xl font-bold ${textColor}`}
-        style={{ textShadow: `0 0 10px ${glowColor}, 0 0 30px ${glowColor}44` }}
+        className={`font-display text-4xl md:text-5xl font-bold leading-[1.05] tracking-[0.04em] ${textColor}`}
+        style={{ textShadow: `0 8px 30px ${glowColor}33` }}
       >
         {title}
       </h2>
       {subtitle && (
-        <p className="font-mono text-gray-400 mt-3 text-sm tracking-wide">{subtitle}</p>
+        <p className="mt-3 font-mono text-[11px] uppercase tracking-[0.2em] text-slate-500 md:text-xs">{subtitle}</p>
       )}
       <div
-        className="mt-4 h-[1px] w-24"
+        className="mt-5 h-[2px] w-28 rounded-full"
         style={{
-          background: `linear-gradient(90deg, ${glowColor}, transparent)`,
-          boxShadow: `0 0 6px ${glowColor}`,
+          background: `linear-gradient(90deg, ${glowColor}, rgba(255,255,255,0))`,
+          boxShadow: `0 8px 24px ${glowColor}33`,
         }}
       />
     </div>

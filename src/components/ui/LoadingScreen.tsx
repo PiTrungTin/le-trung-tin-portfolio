@@ -10,18 +10,18 @@ export function LoadingScreen() {
   useEffect(() => {
     const interval = setInterval(() => {
       setProgress((prev) => {
-        const next = prev + Math.random() * 15 + 3
+        const next = prev + Math.random() * 15 + 4
         if (next >= 100) {
           clearInterval(interval)
           setTimeout(() => {
             setReady(true)
-            setTimeout(() => setShow(false), 500)
-          }, 300)
+            setTimeout(() => setShow(false), 450)
+          }, 220)
           return 100
         }
         return next
       })
-    }, 120)
+    }, 100)
 
     return () => clearInterval(interval)
   }, [setReady])
@@ -31,74 +31,38 @@ export function LoadingScreen() {
       {show && (
         <motion.div
           exit={{ opacity: 0 }}
-          transition={{ duration: 0.5 }}
-          className="fixed inset-0 z-[10000] bg-cyber-darker flex flex-col items-center justify-center"
+          transition={{ duration: 0.45 }}
+          className="fixed inset-0 z-[10000] flex items-center justify-center overflow-hidden bg-[linear-gradient(180deg,#f7fbff_0%,#e7f0fb_100%)]"
         >
-          {/* Scanlines on loading screen */}
-          <div
-            className="absolute inset-0 pointer-events-none"
-            style={{
-              background: 'repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,255,255,0.02) 2px, rgba(0,255,255,0.02) 4px)',
-            }}
-          />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(118,215,255,0.35),transparent_28%),radial-gradient(circle_at_top_right,rgba(255,170,133,0.28),transparent_22%)]" />
 
           <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
+            initial={{ opacity: 0, scale: 0.94 }}
             animate={{ opacity: 1, scale: 1 }}
-            className="text-center"
+            className="relative w-[min(88vw,420px)] rounded-[32px] border border-white/70 bg-white/72 p-8 text-center shadow-[0_32px_90px_rgba(23,50,77,0.14)] backdrop-blur-xl"
           >
-            <h1
-              className="font-display text-4xl md:text-5xl font-black text-cyber-cyan mb-4"
-              style={{ textShadow: '0 0 15px #00ffff, 0 0 40px #00ffff, 0 0 80px #00ffff66' }}
-            >
-              SYS_INIT
-            </h1>
+            <div className="mx-auto mb-5 flex h-16 w-16 items-center justify-center rounded-2xl border border-cyber-cyan/30 bg-sky-50 shadow-[0_16px_36px_rgba(22,158,230,0.16)]">
+              <div className="h-8 w-8 rounded-xl border border-cyber-cyan/40 bg-white" />
+            </div>
 
-            <p className="font-mono text-xs text-cyber-magenta mb-8 tracking-widest">
-              INITIALIZING NEURAL INTERFACE...
+            <h1 className="font-display text-3xl font-black tracking-[0.18em] text-slate-800 md:text-4xl">
+              PORTFOLIO
+            </h1>
+            <p className="mt-2 font-mono text-[11px] uppercase tracking-[0.35em] text-slate-500">
+              preparing the robot guide
             </p>
 
-            {/* Progress bar */}
-            <div className="w-64 md:w-80 h-1 bg-cyber-surface/50 rounded-full overflow-hidden border border-cyber-cyan/20">
+            <div className="mt-8 h-2 overflow-hidden rounded-full bg-slate-200/80">
               <motion.div
                 initial={{ width: 0 }}
                 animate={{ width: `${progress}%` }}
-                className="h-full bg-gradient-to-r from-cyber-cyan/60 to-cyber-cyan"
-                style={{ boxShadow: '0 0 10px #00ffff' }}
+                className="h-full rounded-full bg-[linear-gradient(90deg,#169ee6,#79d8ff,#f3b63f)]"
               />
             </div>
 
-            <div className="flex justify-between mt-2">
-              <span className="font-mono text-[10px] text-gray-500">
-                {progress < 100 ? 'LOADING_MODULES...' : 'READY'}
-              </span>
-              <span className="font-mono text-[10px] text-cyber-cyan">
-                {Math.round(progress)}%
-              </span>
-            </div>
-
-            {/* Loading log lines */}
-            <div className="mt-8 font-mono text-[10px] text-gray-600 space-y-1 text-left max-w-xs mx-auto">
-              <motion.p initial={{ opacity: 0 }} animate={{ opacity: progress > 10 ? 1 : 0 }}>
-                [OK] WebGL context initialized
-              </motion.p>
-              <motion.p initial={{ opacity: 0 }} animate={{ opacity: progress > 25 ? 1 : 0 }}>
-                [OK] Shader modules loaded (32/32)
-              </motion.p>
-              <motion.p initial={{ opacity: 0 }} animate={{ opacity: progress > 50 ? 1 : 0 }}>
-                [OK] Particle system online ({'>'}2000 nodes)
-              </motion.p>
-              <motion.p initial={{ opacity: 0 }} animate={{ opacity: progress > 75 ? 1 : 0 }}>
-                [OK] Post-processing pipeline ready
-              </motion.p>
-              <motion.p initial={{ opacity: 0 }} animate={{ opacity: progress > 90 ? 1 : 0 }}>
-                [OK] Neural network calibrated
-              </motion.p>
-              {progress >= 100 && (
-                <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-cyber-cyan">
-                  [OK] System ready. Welcome, operator.
-                </motion.p>
-              )}
+            <div className="mt-3 flex justify-between font-mono text-[11px] uppercase tracking-[0.22em] text-slate-500">
+              <span>{progress < 100 ? 'syncing sections' : 'ready'}</span>
+              <span>{Math.round(progress)}%</span>
             </div>
           </motion.div>
         </motion.div>

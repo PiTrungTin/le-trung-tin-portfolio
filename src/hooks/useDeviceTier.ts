@@ -22,15 +22,16 @@ export function useDeviceTier() {
 
     const isMobile = /mobi|android|iphone|ipad/i.test(navigator.userAgent)
     const isIntegrated = /intel|hd graphics|uhd graphics|mali|adreno|powervr/i.test(renderer)
+    const currentTier = useStore.getState().deviceTier
 
-    if (isMobile || isIntegrated || tier === 'low') {
+    if (isMobile || isIntegrated || currentTier === 'low') {
       setDeviceTier('low')
     } else if (/nvidia|amd|radeon|geforce|rtx/i.test(renderer)) {
       setDeviceTier('high')
     } else {
       setDeviceTier('medium')
     }
-  }, [])
+  }, [setDeviceTier])
 
   return tier
 }

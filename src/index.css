@@ -1,15 +1,24 @@
 @import "tailwindcss";
 
 @theme {
-  --color-cyber-cyan: #00ffff;
-  --color-cyber-magenta: #ff00ff;
-  --color-cyber-yellow: #ffff00;
-  --color-cyber-dark: #0a0a0f;
-  --color-cyber-darker: #050508;
-  --color-cyber-surface: #111122;
-  --color-cyber-border: #1a1a3e;
+  --color-cyber-cyan: #169ee6;
+  --color-cyber-magenta: #f97352;
+  --color-cyber-yellow: #f3b63f;
+  --color-cyber-dark: #eef5ff;
+  --color-cyber-darker: #dfeafb;
+  --color-cyber-surface: #ffffff;
+  --color-cyber-border: #bfd6ef;
   --font-display: 'Orbitron', sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
+}
+
+:root {
+  color: #17324d;
+  background:
+    linear-gradient(90deg, rgba(255, 255, 255, 0.36) 0, rgba(255, 255, 255, 0) 14%, rgba(255, 255, 255, 0) 86%, rgba(255, 255, 255, 0.28) 100%),
+    radial-gradient(circle at top left, rgba(118, 215, 255, 0.4), transparent 28%),
+    radial-gradient(circle at top right, rgba(255, 170, 133, 0.34), transparent 24%),
+    linear-gradient(180deg, #f7fbff 0%, #eff5fc 50%, #e7f0fb 100%);
 }
 
 * {
@@ -21,6 +30,7 @@
 html {
   scrollbar-width: none;
   -ms-overflow-style: none;
+  scroll-behavior: smooth;
 }
 
 html::-webkit-scrollbar {
@@ -28,64 +38,82 @@ html::-webkit-scrollbar {
 }
 
 body {
-  background: #0a0a0f;
-  color: #e0e0e0;
+  min-height: 100vh;
+  background:
+    linear-gradient(90deg, rgba(255, 255, 255, 0.36) 0, rgba(255, 255, 255, 0) 14%, rgba(255, 255, 255, 0) 86%, rgba(255, 255, 255, 0.28) 100%),
+    radial-gradient(circle at top left, rgba(118, 215, 255, 0.4), transparent 28%),
+    radial-gradient(circle at top right, rgba(255, 170, 133, 0.34), transparent 24%),
+    linear-gradient(180deg, #f7fbff 0%, #eff5fc 50%, #e7f0fb 100%);
+  color: #17324d;
   font-family: 'JetBrains Mono', monospace;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background:
+    linear-gradient(90deg, rgba(22, 158, 230, 0.03) 0, transparent 16%, transparent 84%, rgba(249, 115, 82, 0.03) 100%),
+    radial-gradient(circle at 20% 18%, rgba(22, 158, 230, 0.12), transparent 20%),
+    radial-gradient(circle at 84% 20%, rgba(249, 115, 82, 0.11), transparent 18%),
+    radial-gradient(circle at 68% 76%, rgba(22, 158, 230, 0.1), transparent 18%),
+    linear-gradient(rgba(255,255,255,0.22) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(183, 210, 236, 0.2) 1px, transparent 1px);
+  background-size: auto, auto, auto, auto, 120px 120px, 120px 120px;
+  background-position: 0 0, 0 0, 0 0, 0 0, center center, center center;
+  pointer-events: none;
+  z-index: -2;
+}
+
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.35), rgba(255, 255, 255, 0)),
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 3px,
+      rgba(22, 158, 230, 0.022) 3px,
+      rgba(22, 158, 230, 0.022) 6px
+    );
+  mix-blend-mode: screen;
+  pointer-events: none;
+  z-index: 9999;
+  animation: scanlines 12s linear infinite;
 }
 
 #root {
   width: 100%;
   max-width: 100%;
   margin: 0;
-  text-align: left;
-  border: none;
   min-height: auto;
   display: block;
 }
 
-/* Scanlines overlay */
-body::after {
-  content: '';
-  position: fixed;
-  inset: 0;
-  background: repeating-linear-gradient(
-    0deg,
-    transparent,
-    transparent 2px,
-    rgba(0, 255, 255, 0.015) 2px,
-    rgba(0, 255, 255, 0.015) 4px
-  );
-  pointer-events: none;
-  z-index: 9999;
-  animation: scanlines 8s linear infinite;
-}
-
 @keyframes scanlines {
-  0% { background-position: 0 0; }
-  100% { background-position: 0 100px; }
+  0% { background-position: 0 0, 0 0; }
+  100% { background-position: 0 0, 0 140px; }
 }
 
-/* Neon glow keyframes */
 @keyframes glow-pulse {
-  0%, 100% { opacity: 0.8; }
+  0%, 100% { opacity: 0.75; }
   50% { opacity: 1; }
 }
 
 @keyframes flicker {
-  0%, 19.999%, 22%, 62.999%, 64%, 64.999%, 70%, 100% { opacity: 1; }
-  20%, 21.999%, 63%, 63.999%, 65%, 69.999% { opacity: 0.4; }
+  0%, 100% { opacity: 0.95; }
+  45% { opacity: 0.85; }
+  48% { opacity: 0.55; }
+  52% { opacity: 0.82; }
 }
 
 @keyframes scanline-sweep {
-  0% { transform: translateY(-100%); }
-  100% { transform: translateY(100vh); }
-}
-
-@keyframes pulse-glow {
-  0%, 100% { box-shadow: 0 0 5px var(--glow-color, #00ffff); }
-  50% { box-shadow: 0 0 20px var(--glow-color, #00ffff), 0 0 40px var(--glow-color, #00ffff); }
+  0% { transform: translateY(-120%); }
+  100% { transform: translateY(120%); }
 }
 
 @keyframes orbit {
@@ -93,27 +121,26 @@ body::after {
   100% { transform: rotate(360deg) translateX(30px) rotate(-360deg); }
 }
 
-/* Mobile responsive */
+::selection {
+  background: rgba(22, 158, 230, 0.18);
+  color: #12324f;
+}
+
+:focus-visible {
+  outline: 2px solid rgba(22, 158, 230, 0.35);
+  outline-offset: 3px;
+}
+
 @media (max-width: 768px) {
   body::after {
-    background: repeating-linear-gradient(
-      0deg,
-      transparent,
-      transparent 2px,
-      rgba(0, 255, 255, 0.01) 2px,
-      rgba(0, 255, 255, 0.01) 4px
-    );
+    background:
+      linear-gradient(180deg, rgba(255, 255, 255, 0.28), rgba(255, 255, 255, 0)),
+      repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 3px,
+        rgba(22, 158, 230, 0.016) 3px,
+        rgba(22, 158, 230, 0.016) 6px
+      );
   }
-}
-
-/* Selection styling */
-::selection {
-  background: rgba(0, 255, 255, 0.2);
-  color: #00ffff;
-}
-
-/* Focus visible */
-:focus-visible {
-  outline: 1px solid rgba(0, 255, 255, 0.4);
-  outline-offset: 2px;
 }

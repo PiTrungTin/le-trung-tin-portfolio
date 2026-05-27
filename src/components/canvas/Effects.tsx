@@ -1,5 +1,5 @@
 import { EffectComposer, Bloom, Vignette, ChromaticAberration, Noise, Glitch } from '@react-three/postprocessing'
-import { GlitchMode } from 'postprocessing'
+import { GlitchEffect, GlitchMode } from 'postprocessing'
 import { useStore } from '../../store/useStore'
 import { useRef, useEffect } from 'react'
 import * as THREE from 'three'
@@ -9,13 +9,13 @@ export function Effects() {
   const effectsIntensity = useStore((s) => s.effectsIntensity)
   const triggerGlitch = useStore((s) => s.triggerGlitch)
 
-  const glitchRef = useRef<any>(null)
+  const glitchRef = useRef<GlitchEffect | null>(null)
 
   useEffect(() => {
     if (triggerGlitch && glitchRef.current && tier !== 'low') {
-      glitchRef.current.strength = 0.8
+      glitchRef.current.strength.set(0.12, 0.18)
       setTimeout(() => {
-        if (glitchRef.current) glitchRef.current.strength = 0.2
+        if (glitchRef.current) glitchRef.current.strength.set(0.015, 0.05)
       }, 150)
     }
   }, [triggerGlitch, tier])
@@ -23,37 +23,37 @@ export function Effects() {
   return (
     <EffectComposer multisampling={tier === 'high' ? 4 : 0}>
       <Bloom
-        intensity={0.6 * effectsIntensity}
-        luminanceThreshold={0.2}
-        luminanceSmoothing={0.9}
+        intensity={0.28 * effectsIntensity}
+        luminanceThreshold={0.55}
+        luminanceSmoothing={0.45}
         mipmapBlur
       />
 
       {tier !== 'low'
         ? <Glitch
             ref={glitchRef}
-            delay={new THREE.Vector2(1.5, 3.5)}
-            duration={new THREE.Vector2(0.1, 0.3)}
-            strength={new THREE.Vector2(0.1, 0.3)}
+            delay={new THREE.Vector2(2.5, 5.5)}
+            duration={new THREE.Vector2(0.06, 0.14)}
+            strength={new THREE.Vector2(0.015, 0.05)}
             mode={GlitchMode.SPORADIC}
             active
-            ratio={0.85}
+            ratio={0.92}
           />
         : <></>}
 
       {tier !== 'low'
         ? <ChromaticAberration
-            offset={[0.0015, 0.0005]}
+            offset={[0.0007, 0.00025]}
             radialModulation
             modulationOffset={0.5}
           />
         : <></>}
 
       {tier === 'high'
-        ? <Noise opacity={0.03} />
+        ? <Noise opacity={0.012} />
         : <></>}
 
-      <Vignette offset={0.3} darkness={0.7} eskil={false} />
+      <Vignette offset={0.08} darkness={0.25} eskil={false} />
     </EffectComposer>
   )
 }

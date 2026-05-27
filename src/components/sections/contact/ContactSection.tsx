@@ -2,12 +2,12 @@ import { useState, type FormEvent } from 'react'
 import { motion } from 'framer-motion'
 import { SectionHeading } from '../../ui/SectionHeading'
 import { NeonButton } from '../../ui/NeonButton'
+import { HolographicCard } from '../../ui/HolographicCard'
 
-const socialLinks = [
-  { name: 'GitHub', url: '#', icon: 'GH', variant: 'cyan' as const },
-  { name: 'LinkedIn', url: '#', icon: 'LI', variant: 'magenta' as const },
-  { name: 'Email', url: '#', icon: '@', variant: 'yellow' as const },
-  { name: 'Twitter', url: '#', icon: 'TW', variant: 'cyan' as const },
+const contactChannels = [
+  { name: 'Phone', value: '(+84) 909 212 434', variant: 'cyan' as const },
+  { name: 'LinkedIn', value: 'linkedin.com/in/le-tin1404', variant: 'magenta' as const },
+  { name: 'Email', value: 'lttin144@gmail.com', variant: 'yellow' as const },
 ]
 
 export function ContactSection() {
@@ -23,128 +23,89 @@ export function ContactSection() {
   }
 
   return (
-    <section id="contact" className="min-h-screen flex items-center justify-center relative py-20">
-      <div className="max-w-5xl mx-auto px-6 w-full">
+    <section id="contact" className="relative flex min-h-screen items-center py-20 lg:py-24">
+      <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden>
+        <div className="absolute left-[7%] top-24 h-40 w-40 rounded-full bg-cyan-100/25 blur-3xl" />
+        <div className="absolute right-[10%] top-24 h-24 w-24 rotate-12 rounded-[24px] border border-orange-200/35" />
+        <div className="absolute bottom-24 right-[14%] flex gap-2 opacity-45">
+          <span className="h-3 w-3 rounded-full bg-cyan-200/75" />
+          <span className="h-3 w-3 rounded-full bg-orange-200/75" />
+          <span className="h-3 w-3 rounded-full bg-amber-200/75" />
+        </div>
+      </div>
+
+      <div className="relative z-10 grid w-full gap-8 lg:grid-cols-[280px_minmax(0,1fr)] lg:items-start xl:grid-cols-[320px_minmax(0,1fr)]">
         <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true, margin: '-100px' }}
+          initial={{ opacity: 0, x: -20 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true, margin: '-120px' }}
           transition={{ duration: 0.5 }}
-          className="mb-16"
         >
-          <SectionHeading
-            title="Get In Touch"
-            subtitle="// ssh user@contact-form"
-            variant="cyan"
-          />
+          <SectionHeading title="Contact" subtitle="start a conversation" variant="cyan" />
+          <div className="space-y-4">
+            {contactChannels.map((channel) => (
+              <HolographicCard key={channel.name} variant={channel.variant} className="bg-white/70 !p-5">
+                <p className="font-mono text-[11px] uppercase tracking-[0.14em] text-slate-500">{channel.name}</p>
+                <p className="mt-2 text-sm text-slate-600">{channel.value}</p>
+              </HolographicCard>
+            ))}
+          </div>
         </motion.div>
 
-        <div className="flex flex-col md:flex-row gap-12 items-start">
-          {/* Social links — left side */}
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-            className="w-full md:w-48 flex-shrink-0 space-y-1"
-          >
-            {socialLinks.map((link, i) => (
-              <motion.a
-                key={link.name}
-                href={link.url}
-                initial={{ opacity: 0, x: -20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.3, delay: i * 0.1 }}
-                whileHover={{ scale: 1.03, x: 5 }}
-                className={`group flex items-center gap-3 border-l-2 pl-4 py-2.5 transition-all duration-300 cursor-pointer ${
-                  link.variant === 'cyan' ? 'border-cyber-cyan/30 hover:border-cyber-cyan' :
-                  link.variant === 'magenta' ? 'border-cyber-magenta/30 hover:border-cyber-magenta' :
-                  'border-cyber-yellow/30 hover:border-cyber-yellow'
-                }`}
-              >
-                <span
-                  className={`font-mono text-base font-bold ${
-                    link.variant === 'cyan' ? 'text-cyber-cyan' :
-                    link.variant === 'magenta' ? 'text-cyber-magenta' : 'text-cyber-yellow'
-                  }`}
-                >
-                  {link.icon}
-                </span>
-                <span className="font-mono text-sm text-gray-400 group-hover:text-white transition-colors">
-                  {link.name}
-                </span>
-              </motion.a>
-            ))}
-          </motion.div>
-
-          {/* Contact form — right side, wider */}
-          <motion.form
-            initial={{ opacity: 0, x: 20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-            onSubmit={handleSubmit}
-            className="flex-1 space-y-4"
-          >
-            <div>
-              <label className="font-mono text-xs text-gray-500 mb-1 block">$USER</label>
-              <input
-                type="text"
-                value={formState.name}
-                onChange={(e) => setFormState((s) => ({ ...s, name: e.target.value }))}
-                placeholder="your_name"
-                className="w-full bg-cyber-dark/80 border border-cyber-cyan/20 p-3 font-mono text-sm text-white
-                           focus:border-cyber-cyan/60 focus:outline-none transition-colors
-                           placeholder:text-gray-600"
-                style={{ boxShadow: 'inset 0 0 10px rgba(0,255,255,0.03)' }}
-              />
+        <motion.form
+          initial={{ opacity: 0, x: 20 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true, margin: '-120px' }}
+          transition={{ duration: 0.5 }}
+          onSubmit={handleSubmit}
+        >
+          <HolographicCard variant="cyan" className="bg-white/74">
+            <div className="grid gap-5 md:grid-cols-2">
+              <label className="block">
+                <span className="mb-2 block font-mono text-[11px] uppercase tracking-[0.28em] text-slate-500">Name</span>
+                <input
+                  type="text"
+                  value={formState.name}
+                  onChange={(e) => setFormState((s) => ({ ...s, name: e.target.value }))}
+                  placeholder="Your name"
+                  className="w-full rounded-2xl border border-slate-200 bg-white/90 px-4 py-3 text-sm text-slate-700 outline-none transition-colors placeholder:text-slate-400 focus:border-cyber-cyan"
+                />
+              </label>
+              <label className="block">
+                <span className="mb-2 block font-mono text-[11px] uppercase tracking-[0.28em] text-slate-500">Email</span>
+                <input
+                  type="email"
+                  value={formState.email}
+                  onChange={(e) => setFormState((s) => ({ ...s, email: e.target.value }))}
+                  placeholder="you@company.com"
+                  className="w-full rounded-2xl border border-slate-200 bg-white/90 px-4 py-3 text-sm text-slate-700 outline-none transition-colors placeholder:text-slate-400 focus:border-cyber-magenta"
+                />
+              </label>
             </div>
 
-            <div>
-              <label className="font-mono text-xs text-gray-500 mb-1 block">$EMAIL</label>
-              <input
-                type="email"
-                value={formState.email}
-                onChange={(e) => setFormState((s) => ({ ...s, email: e.target.value }))}
-                placeholder="you@domain.dev"
-                className="w-full bg-cyber-dark/80 border border-cyber-magenta/20 p-3 font-mono text-sm text-white
-                           focus:border-cyber-magenta/60 focus:outline-none transition-colors
-                           placeholder:text-gray-600"
-                style={{ boxShadow: 'inset 0 0 10px rgba(255,0,255,0.03)' }}
-              />
-            </div>
-
-            <div>
-              <label className="font-mono text-xs text-gray-500 mb-1 block">$MESSAGE</label>
+            <label className="mt-5 block">
+              <span className="mb-2 block font-mono text-[11px] uppercase tracking-[0.28em] text-slate-500">Message</span>
               <textarea
-                rows={4}
+                rows={6}
                 value={formState.message}
                 onChange={(e) => setFormState((s) => ({ ...s, message: e.target.value }))}
-                placeholder="// write your message here..."
-                className="w-full bg-cyber-dark/80 border border-cyber-yellow/20 p-3 font-mono text-sm text-white
-                           focus:border-cyber-yellow/60 focus:outline-none transition-colors resize-none
-                           placeholder:text-gray-600"
-                style={{ boxShadow: 'inset 0 0 10px rgba(255,255,0,0.03)' }}
+                placeholder="Tell me what you are building and where you need help."
+                className="w-full resize-none rounded-[24px] border border-slate-200 bg-white/90 px-4 py-4 text-sm leading-7 text-slate-700 outline-none transition-colors placeholder:text-slate-400 focus:border-cyber-yellow"
               />
-            </div>
+            </label>
 
-            <div className="flex items-center gap-4">
+            <div className="mt-6 flex flex-wrap items-center gap-4">
               <NeonButton variant="cyan" type="submit" disabled={submitted}>
-                {submitted ? 'SENT // ✓' : 'SEND_TRANSMISSION'}
+                {submitted ? 'Message Sent' : 'Send Message'}
               </NeonButton>
               {submitted && (
-                <motion.span
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  className="font-mono text-xs text-cyber-cyan"
-                >
-                  Message transmitted successfully.
-                </motion.span>
+                <span className="font-mono text-[11px] uppercase tracking-[0.12em] text-cyber-cyan">
+                  Message queued successfully
+                </span>
               )}
             </div>
-          </motion.form>
-        </div>
+          </HolographicCard>
+        </motion.form>
       </div>
     </section>
   )

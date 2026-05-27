@@ -8,6 +8,7 @@ import { Effects } from './Effects'
 import { SceneSetup } from './SceneSetup'
 import { SceneController } from './SceneController'
 import { GridFloor } from './GridFloor'
+import { RobotGuide } from './RobotGuide'
 import { HeroScene3D } from '../sections/hero/HeroScene3D'
 import { AboutScene3D } from '../sections/about/AboutScene3D'
 import { SkillsScene3D } from '../sections/skills/SkillsScene3D'
@@ -15,12 +16,17 @@ import { ProjectsScene3D } from '../sections/projects/ProjectsScene3D'
 import { ExperienceScene3D } from '../sections/experience/ExperienceScene3D'
 import { ContactScene3D } from '../sections/contact/ContactScene3D'
 
+function pseudoRandom(seed: number) {
+  const value = Math.sin(seed * 12.9898) * 43758.5453
+  return value - Math.floor(value)
+}
+
 function ParticlesImpl({ count = 2000 }: { count?: number }) {
   const pointsRef = useRef<THREE.Points>(null!)
   const tier = useStore((s) => s.deviceTier)
   const scroll = useScroll()
 
-  const actualCount = tier === 'high' ? count : tier === 'medium' ? 1000 : 300
+  const actualCount = tier === 'high' ? count : tier === 'medium' ? 600 : 180
 
   const [positions, colors, sizes] = useMemo(() => {
     const pos = new Float32Array(actualCount * 3)
@@ -28,35 +34,41 @@ function ParticlesImpl({ count = 2000 }: { count?: number }) {
     const siz = new Float32Array(actualCount)
 
     const neonColors = [
-      new THREE.Color('#00ffff'),
-      new THREE.Color('#ff00ff'),
-      new THREE.Color('#ffff00'),
-      new THREE.Color('#00ff88'),
+      new THREE.Color('#7cd9ff'),
+      new THREE.Color('#ffd1bd'),
+      new THREE.Color('#ffe2a1'),
+      new THREE.Color('#a0e7ff'),
     ]
 
     for (let i = 0; i < actualCount; i++) {
       const i3 = i * 3
-      pos[i3] = (Math.random() - 0.5) * 30
-      pos[i3 + 1] = (Math.random() - 0.5) * 20
-      pos[i3 + 2] = (Math.random() - 0.5) * 15
+      const rx = pseudoRandom(i + 1)
+      const ry = pseudoRandom(i + 101)
+      const rz = pseudoRandom(i + 1001)
+      const rc = pseudoRandom(i + 5001)
+      const rs = pseudoRandom(i + 9001)
 
-      const color = neonColors[Math.floor(Math.random() * neonColors.length)]
+      pos[i3] = (rx - 0.5) * 30
+      pos[i3 + 1] = (ry - 0.5) * 20
+      pos[i3 + 2] = (rz - 0.5) * 15
+
+      const color = neonColors[Math.floor(rc * neonColors.length)]
       col[i3] = color.r
       col[i3 + 1] = color.g
       col[i3 + 2] = color.b
 
-      siz[i] = Math.random() * 0.03 + 0.01
+      siz[i] = rs * 0.025 + 0.008
     }
 
     return [pos, col, siz]
   }, [actualCount])
 
   useFrame((_, delta) => {
-    pointsRef.current.rotation.y += delta * 0.03
-    pointsRef.current.rotation.x += delta * 0.01
+    pointsRef.current.rotation.y += delta * 0.015
+    pointsRef.current.rotation.x += delta * 0.006
 
     const offset = scroll.offset
-    pointsRef.current.position.z = offset * 2
+    pointsRef.current.position.z = offset * 1.2
   })
 
   return (
@@ -71,15 +83,15 @@ function ParticlesImpl({ count = 2000 }: { count?: number }) {
         vertexColors
         sizeAttenuation
         transparent
-        opacity={0.6}
-        blending={THREE.AdditiveBlending}
+        opacity={0.28}
+        blending={THREE.NormalBlending}
         depthWrite={false}
       />
     </points>
   )
 }
 
-function Particles({ count = 2000 }: { count?: number }) {
+function Particles({ count = 1200 }: { count?: number }) {
   return (
     <Suspense fallback={null}>
       <ParticlesImpl count={count} />
@@ -93,6 +105,7 @@ function SceneContent() {
       <SceneController />
       <GridFloor />
       <Particles />
+      <RobotGuide />
 
       <Suspense fallback={null}>
         <HeroScene3D />

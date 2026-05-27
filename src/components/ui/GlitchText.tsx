@@ -7,10 +7,13 @@ interface GlitchTextProps {
 }
 
 export function GlitchText({ text, as: Tag = 'h1', className = '' }: GlitchTextProps) {
-  const glitchStyle = useMemo(() => ({
-    '--clip-top': `${Math.random() * 40 + 5}%`,
-    '--clip-bottom': `${Math.random() * 30 + 60}%`,
-  }), [])
+  const glitchStyle = useMemo(() => {
+    const base = text.length % 7
+    return {
+      '--clip-top': `${12 + base * 2}%`,
+      '--clip-bottom': `${70 + base}%`,
+    }
+  }, [text])
 
   return (
     <Tag
@@ -19,24 +22,23 @@ export function GlitchText({ text, as: Tag = 'h1', className = '' }: GlitchTextP
       style={{
         ...glitchStyle,
         textShadow:
-          '0 0 10px #00ffff, 0 0 40px #00ffff, 0 0 80px #00ffff, ' +
-          '2px 2px 0px #ff00ff, -2px -2px 0px #00ffff',
+          '0 10px 26px rgba(22, 158, 230, 0.22), ' +
+          '1px 1px 0px rgba(249, 115, 82, 0.3), -1px -1px 0px rgba(22, 158, 230, 0.18)',
       }}
     >
       <span className="relative z-10">{text}</span>
 
-      {/* Glitch clone layers */}
       <span
         aria-hidden
-        className="absolute inset-0 z-20 text-cyber-cyan"
-        style={{ clipPath: 'inset(var(--clip-top) 0 0 0)', animation: 'flicker 3s infinite' }}
+        className="absolute inset-0 z-20 text-cyber-cyan/50"
+        style={{ clipPath: 'inset(var(--clip-top) 0 0 0)', animation: 'flicker 4.5s infinite' }}
       >
         {text}
       </span>
       <span
         aria-hidden
-        className="absolute inset-0 z-20 text-cyber-magenta"
-        style={{ clipPath: 'inset(0 0 var(--clip-bottom) 0)', animation: 'flicker 2.5s infinite 0.2s' }}
+        className="absolute inset-0 z-20 text-cyber-magenta/45"
+        style={{ clipPath: 'inset(0 0 var(--clip-bottom) 0)', animation: 'flicker 4s infinite 0.2s' }}
       >
         {text}
       </span>
