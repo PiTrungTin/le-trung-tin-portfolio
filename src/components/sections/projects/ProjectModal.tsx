@@ -34,6 +34,9 @@ export function ProjectModal() {
             </button>
 
             <p className="text-sm text-slate-500">{project.eyebrow}</p>
+            {project.period && (
+              <p className="mt-2 text-xs uppercase tracking-[0.12em] text-slate-400">{project.period}</p>
+            )}
             <h2 className="mt-3 max-w-2xl font-serif text-4xl leading-tight text-slate-950">
               {project.name}
             </h2>

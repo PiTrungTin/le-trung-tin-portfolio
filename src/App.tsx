@@ -5,13 +5,13 @@ import { ProjectModal } from './components/sections/projects/ProjectModal'
 import { LazySection } from './components/ui/LazySection'
 
 const HeroSection = lazy(() => import('./components/sections/hero/HeroSection').then((m) => ({ default: m.HeroSection })))
-const AboutSection = lazy(() => import('./components/sections/about/AboutSection').then((m) => ({ default: m.AboutSection })))
+const WhyMeSection = lazy(() => import('./components/sections/why-me/WhyMeSection').then((m) => ({ default: m.WhyMeSection })))
 const SkillsSection = lazy(() => import('./components/sections/skills/SkillsSection').then((m) => ({ default: m.SkillsSection })))
 const ProjectsSection = lazy(() => import('./components/sections/projects/ProjectsSection').then((m) => ({ default: m.ProjectsSection })))
 const ExperienceSection = lazy(() => import('./components/sections/experience/ExperienceSection').then((m) => ({ default: m.ExperienceSection })))
 const ContactSection = lazy(() => import('./components/sections/contact/ContactSection').then((m) => ({ default: m.ContactSection })))
 
-const sectionIds = ['hero', 'about', 'skills', 'projects', 'experience', 'contact'] as const
+const sectionIds = ['hero', 'why-me', 'skills', 'projects', 'experience', 'contact'] as const
 
 function App() {
   useEffect(() => {
@@ -50,8 +50,8 @@ function App() {
         <LazySection id="hero" backgroundClassName="bg-[#f4ede1]">
           <HeroSection />
         </LazySection>
-        <LazySection id="about" backgroundClassName="bg-[#fbf8f2]">
-          <AboutSection />
+        <LazySection id="why-me" backgroundClassName="bg-[#fbf8f2]">
+          <WhyMeSection />
         </LazySection>
         <LazySection id="skills" backgroundClassName="bg-[#f2ece3]">
           <SkillsSection />

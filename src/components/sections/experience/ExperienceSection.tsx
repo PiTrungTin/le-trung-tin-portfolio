@@ -2,22 +2,16 @@ import { SectionHeading } from '../../ui/SectionHeading'
 
 const experiences = [
   {
-    year: 'Oct 2024 - Present',
-    role: 'Middle Software Engineer',
-    company: 'Hanatour Japan System',
-    desc: 'Own frontend architecture and booking-related product implementation while also contributing to performance improvements around high-traffic travel workflows.',
+    year: '2024 - Present',
+    role: 'Full-Stack Developer',
+    company: 'Hanatour System Japan',
+    desc: 'Working across Hanamade and Gorilla, two travel platforms with different product models. My work includes building a new Vue.js frontend from scratch, contributing to Spring Boot backend services, improving search performance with ElasticSearch, supporting database design, and solving operational workflows such as PDF and QR-based response mapping.',
   },
   {
-    year: 'Sep 2022 - Sep 2024',
-    role: 'Full-Stack Software Engineer',
-    company: 'FPT Software',
-    desc: 'Worked across Spring Boot services, NestJS microservices, Kafka workflows, and React or Vue interfaces for travel products with real operational complexity.',
-  },
-  {
-    year: 'Ongoing',
-    role: 'Technical Coordination',
-    company: 'Cross-team support and reliability',
-    desc: 'Support delivery by unblocking technical issues, reviewing code quality, and applying reliability patterns such as idempotency and dead-letter handling.',
+    year: '2022 - 2024',
+    role: 'Full-Stack Developer to Project Leader',
+    company: 'Ascotts / Capitaland project',
+    desc: 'Worked on a hotel booking platform in a multi-vendor microservice environment using AEM, Vue.js, Spring Boot, and SQL Server. During the project, I grew from a full-stack developer into a leadership role while coordinating delivery across a more complex team structure.',
   },
 ]
 
@@ -28,7 +22,7 @@ export function ExperienceSection() {
 
       <div className="mx-auto max-w-4xl space-y-12">
         {experiences.map((item) => (
-          <div key={item.role} className="grid gap-4 border-b border-black/8 pb-12 text-center lg:grid-cols-[180px_minmax(0,1fr)] lg:text-left">
+          <div key={`${item.company}-${item.year}`} className="grid gap-4 border-b border-black/8 pb-12 text-center lg:grid-cols-[180px_minmax(0,1fr)] lg:text-left">
             <p className="text-sm text-slate-500">{item.year}</p>
             <div className="mx-auto max-w-3xl lg:mx-0">
               <h3 className="font-serif text-2xl text-slate-950">{item.role}</h3>

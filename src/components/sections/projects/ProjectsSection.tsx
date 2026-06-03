@@ -15,10 +15,15 @@ export function ProjectsSection() {
             className="group w-full border-b border-black/8 pb-12 text-center transition-transform duration-200 hover:-translate-y-1"
           >
             <div className="flex items-center justify-center gap-3 lg:justify-between">
-              <p className="text-sm text-slate-500">{project.eyebrow}</p>
+              <div className="space-y-1 text-center lg:text-left">
+                <p className="text-sm text-slate-500">{project.eyebrow}</p>
+                {project.period && (
+                  <p className="text-xs uppercase tracking-[0.12em] text-slate-400">{project.period}</p>
+                )}
+              </div>
               <span className="inline-flex items-center gap-2 text-sm text-slate-400 opacity-0 transition-all duration-200 group-hover:translate-x-1 group-hover:opacity-100">
                 View details
-                <span aria-hidden>↗</span>
+                <span aria-hidden>{'->'}</span>
               </span>
             </div>
             <div className="mt-4 grid gap-8 lg:grid-cols-[minmax(0,1fr)_280px] lg:text-left">
@@ -39,11 +44,6 @@ export function ProjectsSection() {
                   {item}
                 </span>
               ))}
-            </div>
-            <div className="mt-6 flex justify-center lg:justify-start">
-              <span className="rounded-full border border-black/10 px-4 py-2 text-sm text-slate-500 transition-colors duration-200 group-hover:border-black/20 group-hover:text-slate-900">
-                Click to open case study
-              </span>
             </div>
           </button>
         ))}

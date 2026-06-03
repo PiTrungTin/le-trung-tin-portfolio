@@ -2,7 +2,7 @@ import { useStore } from '../../store/useStore'
 
 const sections = [
   { id: 'hero', label: 'Home', idx: 0 },
-  { id: 'about', label: 'About', idx: 1 },
+  { id: 'why-me', label: 'Why me', idx: 1 },
   { id: 'skills', label: 'Skills', idx: 2 },
   { id: 'projects', label: 'Projects', idx: 3 },
   { id: 'experience', label: 'Experience', idx: 4 },

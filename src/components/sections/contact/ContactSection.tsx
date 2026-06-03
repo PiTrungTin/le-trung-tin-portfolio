@@ -13,8 +13,9 @@ export function ContactSection() {
 
       <div className="mx-auto max-w-3xl text-center">
         <p className="text-lg leading-9 text-slate-700">
-          I am open to backend and full-stack opportunities. If you are working on product systems,
-          integrations, booking flows, or operational platforms, email is the best way to reach me.
+          I am open to product, platform, and full-stack engineering opportunities. If you are building
+          software that needs strong execution across user flow, system logic, integrations, or operational
+          complexity, email is the best way to reach me.
         </p>
 
         <div className="mt-10 space-y-6">
